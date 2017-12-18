@@ -1,0 +1,24 @@
+*{  margin:0;  padding:0;  border: 0  }
+html,body{height:100%;  font-family:"微软雅黑",arial,verdana;}
+body{  background: url(../images/bgNew.jpg) no-repeat center;  background-size: cover;  }
+
+.click{  width: 2.5rem;  height:2.5rem;    color: #fff;  border-radius: 50%;
+    background-color: green;  position: absolute;  top: 50%;  left:50%;  margin-left: -1.25rem;  margin-top:-1.25rem;
+    z-index: 100;  cursor: pointer;  font-size: 3.0rem;
+    background: url(../images/begin.png) no-repeat center;background-size: cover;
+}
+.click:focus{  outline:none;  }
+
+.reset{
+    width:1.00rem;
+    position: relative;
+    left:.2rem;
+    top:.2rem;
+    text-align: center;
+    border-radius: 15px;
+    font-size: .26rem;
+    padding:.1rem;
+    color:#fff;
+    background-color: darkgreen;
+    cursor: pointer;
+}

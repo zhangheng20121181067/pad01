@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<title>Pad1</title>
+	<link href="css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/postbirdAlertBox.css">
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/ydui.flexible.js"></script>
+	<script src="js/ajax.js"></script>
+	<script src="js/postbirdAlertBox.js"></script>
+</head>
+<body>
+   <!-- <div class="reset">重 置</div>-->
+    <div class="click" id="begin">
+
+	</div>
+
+
+
+
+	<script>
+		//手机调试
+		initConsole();
+		function initConsole(){
+			var js_console = document.createElement('script');
+			js_console.src = './js/vconsole.min.js';
+			document.body.appendChild(js_console);
+			js_console.onload = function () {
+				var vConsole = new VConsole();
+			}
+		}
+
+
+		$(document).ready(function(){
+
+			/*PostbirdAlertBox.alert({
+				'title': 'haha ',
+				'content':"膳魔师凯菲系列炫酷隔热咖啡杯",
+				'okBtn': '确认 ',
+				'cancelBtn': ' ',
+				'contentColor': '#eee'
+			});*/
+
+			//重置(抽奖完成接口调用)
+			/*$(".reset").on("click",function(){
+				ajax({
+					type:"post",
+					url:"/zqunguang/led_timer_finish",
+					data:{
+						activity_guid:"1"
+					},
+					contentType:"application/x-www-form-urlencoded",
+					success:function(res){
+						console.log("重置 LED抽奖动画完成调用:"+JSON.stringify(res));
+					}
+				});
+			});*/
+
+
+			var timer;
+            //开始抽奖
+			$("#begin").on("click",function(){
+				ajax({
+					type: "post",
+					url: "/zqunguang/led_luckdraw",
+					data: {
+						activity_guid: "1"
+					},
+					contentType: "application/x-www-form-urlencoded",
+					success: function (res) {
+						console.log("抽奖:"+JSON.stringify(res));
+						/*if(!res.status){
+								PostbirdAlertBox.alert({
+									'title': ' ',
+									'content':"抽奖进行中！请稍后再试",
+									'okBtn': '确认 ',
+									'cancelBtn': ' ',
+									'contentColor': '#eee'
+								});
+							$(".btn-footer.btn-block-footer.btn-footer-ok").on("click",function(e){
+								$(".postbird-box-container.active").remove();
+							});
+						}else{*/
+						if(res.status){
+							clearTimeout(timer);
+							$(".postbird-box-container.active").remove();
+							var title="";
+							var intros="";
+							if(res.data.nums==8){
+								title=res.data.title;
+								if(res.data.children.nums==801){
+									intros=res.data.children.title;
+								}else{
+									intros="非锅";
+								}
+							}else{
+								 title=res.data.title;
+								 intros=res.data.intros;
+							}
+                            console.log(intros);
+							timer=setTimeout(function(){
+								PostbirdAlertBox.alert({
+									'title':title ,
+									'content':intros,
+									'okBtn': '确认 ',
+									'cancelBtn': ' ',
+									'contentColor': '#eee'
+								});
+							},5500);
+							$(".btn-footer.btn-block-footer.btn-footer-ok").on("click",function(e){
+								$(".postbird-box-container.active").remove();
+							});
+						}
+						//}
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>
